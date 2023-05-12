@@ -1,21 +1,64 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using project_asp.Data;
+using project_asp.Data.Services;
+using project_asp.Models;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace project_asp.Controllers
 {
     public class ActorsController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IActorsService _service;
 
-        public ActorsController(AppDbContext context)
+        public ActorsController(IActorsService service)
         {
-            _context = context;   
+            _service = service;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var data = _context.Actors.ToList();
+            var data = await _service.GetAllAsync();
             return View(data);
         }
+
+        //Get: Actors/Create
+         public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("FullName,ProfilePictureURL,Bio")]Actor actor)
+        {  /*
+            if (!ModelState.IsValid)
+            {
+                var fullNameErrors = ModelState["FullName"].Errors;
+                var profilePictureUrlErrors = ModelState["ProfilePictureURL"].Errors;
+                foreach (var error in fullNameErrors)
+                {
+                    Console.WriteLine("ename: " + error.ErrorMessage);
+                }
+
+                foreach (var error in profilePictureUrlErrors) ;
+                {
+                    Console.WriteLine("eprofile Error: " + error.ErrorMessage);
+                }
+                return View(actor);
+            } */
+           await  _service.AddAsync(actor);
+            return RedirectToAction(nameof(Index));
+        }
+
+        //Get: Actors/Details/1
+        public async Task<IActionResult> Details(int id)
+        {
+            var actorDetails = await _service.GetByIdAsync(id);
+            if (actorDetails == null)
+            {
+                return View("Empty");
+            }
+            return View(actorDetails);
+        }
+
     }
 }

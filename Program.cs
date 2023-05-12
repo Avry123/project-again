@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using project_asp.Data;
+using project_asp.Data.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,9 @@ builder.Services.AddControllersWithViews();
 // Add the database context service
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+// Add the actor service to the container
+builder.Services.AddScoped<IActorsService, ActorsService>();
 
 var app = builder.Build();
 

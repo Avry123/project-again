@@ -5,16 +5,19 @@ namespace project_asp.Models
     public class Actor
     {
         [Key]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Display(Name = "Profile Picture URL")]
-        public string ProfilePictureURL { get; set; }
-        
+        [Required(ErrorMessage = "Profile Picture URL is required")]
+        public string? ProfilePictureURL { get; set; }
+
         [Display(Name = "Full Name")]
-        public string FullName { get; set; }
+        [Required(ErrorMessage = "Full Name is required")]
+        public string? FullName { get; set; }
 
         [Display(Name = "Biography")]
-        public string Bio { get; set; }
+        [Required(ErrorMessage = "Biography is required")]
+        public string? Bio { get; set; }
 
         //Relationships
         public List<Actor_Movie> Actors_Movies { get; set; }
