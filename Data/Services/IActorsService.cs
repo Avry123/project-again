@@ -12,9 +12,9 @@ namespace project_asp.Data.Services
 
         Task AddAsync(Actor actor);
 
-        Actor Update(int id, Actor newActor);
+        Task<Actor> UpdateAsync(int id, Actor newActor);
 
-        void Delete(int id);
+        Task DeleteAsync(int id);
 
 
     }

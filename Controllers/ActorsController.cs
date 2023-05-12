@@ -55,9 +55,82 @@ namespace project_asp.Controllers
             var actorDetails = await _service.GetByIdAsync(id);
             if (actorDetails == null)
             {
-                return View("Empty");
+                return View("NotFound");
             }
             return View(actorDetails);
+        }
+
+        //Get: Actors/Edit/1
+        public async Task<IActionResult> Edit(int id)
+        {
+            var actorDetails = await _service.GetByIdAsync(id);
+            if (actorDetails == null)
+            {
+                return View("NotFound");
+            }
+            return View(actorDetails);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id , [Bind("Id,FullName,ProfilePictureURL,Bio")] Actor actor)
+        {  /*
+            if (!ModelState.IsValid)
+            {
+                var fullNameErrors = ModelState["FullName"].Errors;
+                var profilePictureUrlErrors = ModelState["ProfilePictureURL"].Errors;
+                foreach (var error in fullNameErrors)
+                {
+                    Console.WriteLine("ename: " + error.ErrorMessage);
+                }
+
+                foreach (var error in profilePictureUrlErrors) ;
+                {
+                    Console.WriteLine("eprofile Error: " + error.ErrorMessage);
+                }
+                return View(actor);
+            } */
+            await _service.UpdateAsync(id,actor);
+            return RedirectToAction(nameof(Index));
+        }
+
+        //Get: Actors/Delete
+        public async Task<IActionResult> Delete(int id)
+        {
+            var actorDetails = await _service.GetByIdAsync(id);
+            if (actorDetails == null)
+            {
+                return View("NotFound");
+            }
+            return View(actorDetails);
+        }
+
+        [HttpPost,ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var actorDetails = await _service.GetByIdAsync(id);
+            if (actorDetails == null)
+            {
+                return View("NotFound");
+            }
+            await _service.DeleteAsync(id);
+            /*
+            if (!ModelState.IsValid)
+            {
+                var fullNameErrors = ModelState["FullName"].Errors;
+                var profilePictureUrlErrors = ModelState["ProfilePictureURL"].Errors;
+                foreach (var error in fullNameErrors)
+                {
+                    Console.WriteLine("ename: " + error.ErrorMessage);
+                }
+
+                foreach (var error in profilePictureUrlErrors) ;
+                {
+                    Console.WriteLine("eprofile Error: " + error.ErrorMessage);
+                }
+                return View(actor);
+            } */
+           
+            return RedirectToAction(nameof(Index));
         }
 
     }
