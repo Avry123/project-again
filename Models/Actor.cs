@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using project_asp.Data.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace project_asp.Models
 {
-    public class Actor
+    public class Actor: iEntityBase
     {
         [Key]
         public int? Id { get; set; }
@@ -21,5 +22,6 @@ namespace project_asp.Models
 
         //Relationships
         public List<Actor_Movie> Actors_Movies { get; set; }
+        int iEntityBase.Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

@@ -1,10 +1,11 @@
-﻿using project_asp.Data.Enums;
+﻿using project_asp.Data.Base;
+using project_asp.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace project_asp.Models
 {
-    public class Movie
+    public class Movie:iEntityBase
     {
         [Key]
         public int Id { get; set; }

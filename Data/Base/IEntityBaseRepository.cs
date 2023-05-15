@@ -1,4 +1,5 @@
 ﻿using project_asp.Models;
+using System.Linq.Expressions;
 
 namespace project_asp.Data.Base
 {
@@ -6,11 +7,13 @@ namespace project_asp.Data.Base
     {
         Task<IEnumerable<T>> GetAllAsync();
 
+        Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] includeProperties);
+
         Task<T> GetByIdAsync(int id);
 
         Task AddAsync(T entity);
 
-        Task<T> UpdateAsync(int id, T entity);
+        Task UpdateAsync(int id, T entity);
 
         Task DeleteAsync(int id);
     }
